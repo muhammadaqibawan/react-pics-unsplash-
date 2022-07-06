@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import SearchBar from './components/SearchBar';
+import axios from './axios/index';
+import ImageList from './components/ImageList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import React, { Component } from 'react';
+
+class App extends Component {
+
+  state = {
+    images: []
+  }
+
+  onFormSubmit = (value)=>{
+    axios('search/photos',{
+      params: {
+        query: value
+      }
+    })
+      .then((response) =>{
+        this.setState({images: response.data.results })
+      }).catch(error=>{
+      })
+  }
+
+  render() {
+    return (
+    <div className="ui container" style={{ 'marginTop': '10px' }}>
+      <SearchBar 
+      onFormSubmit={this.onFormSubmit} />
+      <p>Results: { this.state.images.length } </p>
+      <ImageList images={ this.state.images }></ImageList>
     </div>
-  );
+    );
+  }
 }
 
 export default App;
