@@ -16,11 +16,21 @@ class ImageCard extends Component {
        const spans = Math.ceil(height/ 10);
        this.setState({ spans })
     }
+
+    onComplete = ()=>{
+        this.props.onLastImageCallTheFunc()
+    }
+
     render() {
         const { urls, description } = this.props.image;
         return (
             <div style={{ 'gridRowEnd': `span ${this.state.spans}` }}>
-                 <img ref={this.imageRef} src={urls.regular} alt={description} />
+                 <img 
+                 onLoad={this.onComplete} 
+                 onError={this.onComplete} 
+                 ref={this.imageRef} 
+                 src={urls.regular} 
+                 alt={description} />
             </div>
         );
     }
