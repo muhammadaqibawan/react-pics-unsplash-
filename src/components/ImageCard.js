@@ -12,9 +12,11 @@ class ImageCard extends Component {
         this.imageRef.current.addEventListener('load', this.setSpans)
     }
     setSpans = ()=>{
-       const height = this.imageRef.current.clientHeight;
-       const spans = Math.ceil(height/ 10);
-       this.setState({ spans })
+        if(this.imageRef.current){
+            const height = this.imageRef.current.clientHeight;
+            const spans = Math.ceil(height/ 10);
+            this.setState({ spans })
+        }
     }
 
     onComplete = ()=>{
